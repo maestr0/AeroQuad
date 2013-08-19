@@ -34,7 +34,7 @@
 
 #define TEMPERATURE 0
 #define PRESSURE 1
-#define OVER_SAMPLING_SETTING 1 // use to be 3
+#define OVER_SAMPLING_SETTING 3 // use to be 3
 
 byte overSamplingSetting = OVER_SAMPLING_SETTING;
 int ac1 = 0, ac2 = 0, ac3 = 0;
@@ -76,6 +76,7 @@ void initializeBaro() {
   // 1 = standard
   // 2 = high
   // 3 = ultra high resolution
+  Serial.println("Initializing BMP085");
   overSamplingSetting = OVER_SAMPLING_SETTING;
   pressure = 0;
   baroGroundAltitude = 0;

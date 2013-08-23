@@ -1078,6 +1078,32 @@ void measureCriticalSensors() {
 #include "Kinematics_ARG.h"
 #endif
 
+
+
+
+
+//********************************************************
+//****************** SERIAL PORT DECLARATION *************
+//********************************************************
+#if defined(WirelessTelemetry) 
+#if defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
+#define SERIAL_PORT Serial3
+#else    // force 328p to use the normal port
+#define SERIAL_PORT Serial
+#endif
+#else  
+#if defined(SERIAL_USES_USB)   // STM32 Maple
+#define SERIAL_PORT SerialUSB
+#undef BAUD
+#define BAUD
+#else
+#define SERIAL_PORT Serial
+#endif
+#endif  
+
+
+
+
 //********************************************************
 //******************** RECEIVER DECLARATION **************
 //********************************************************
@@ -1240,24 +1266,7 @@ struct BatteryData batteryData[] = {
 #endif
 
 
-//********************************************************
-//****************** SERIAL PORT DECLARATION *************
-//********************************************************
-#if defined(WirelessTelemetry) 
-#if defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
-#define SERIAL_PORT Serial3
-#else    // force 328p to use the normal port
-#define SERIAL_PORT Serial
-#endif
-#else  
-#if defined(SERIAL_USES_USB)   // STM32 Maple
-#define SERIAL_PORT SerialUSB
-#undef BAUD
-#define BAUD
-#else
-#define SERIAL_PORT Serial
-#endif
-#endif  
+
 
 #ifdef SlowTelemetry
 #include <AQ_RSCode.h>

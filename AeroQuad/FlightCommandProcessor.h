@@ -229,6 +229,8 @@ void processZeroThrottleFunctionFromReceiverCommand() {
   if (receiverCommand[ZAXIS] > MINCHECK) {
     safetyCheck = ON; 
   }
+  
+ // motorArmed = ON;
 }
 
 

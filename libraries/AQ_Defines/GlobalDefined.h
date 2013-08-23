@@ -24,9 +24,9 @@
 
 // More AQ relative than generic... have to be think again
 // Basic axis definitions
-#define XAXIS 0
-#define YAXIS 1
-#define ZAXIS 2
+#define XAXIS 0 // throtle
+#define YAXIS 1  // pitch
+#define ZAXIS 2 // roll
 #define THROTTLE 3
 #define MODE 4
 #define AUX1 5

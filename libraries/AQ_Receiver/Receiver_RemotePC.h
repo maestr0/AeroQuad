@@ -36,7 +36,7 @@
 
 // Declare globals for SerialCom.h
 byte rxChannelMap[] = {THROTTLE, YAXIS, XAXIS, ZAXIS, MODE, AUX1, AUX2, AUX3};
-byte rxBuffer[RX_PACKET_LENGTH];
+char rxBuffer[RX_PACKET_LENGTH];
 byte rxBytesReceived;
 
 void initializeReceiver(int nbChannel) {
@@ -52,6 +52,7 @@ void initializeReceiver(int nbChannel) {
   receiverZero[MODE] = 0;
   receiverCommand[AUX1] = 2000;
   receiverZero[AUX1] = 0;
+  Serial.println("RC initialized 2");
 }
 
 int getRawChannelValue(byte channel) {
@@ -63,24 +64,43 @@ void setChannelValue(byte channel,int value) {
 }
 
 void readReceiverPC() {
+  Serial.println("reading RC..."); 
   rxBytesReceived = 0;
-  
-  while (rxBytesReceived < RX_PACKET_LENGTH && SERIAL_AVAILABLE()) {
-    rxBuffer[rxBytesReceived] = SERIAL_READ();
-    rxBytesReceived++;
-  }
+//  receiverCommand[THROTTLE] = -666;
+ // receiverCommand[YAXIS] = 200;
+  //receiverCommand[XAXIS] = 1201;
+  //receiverCommand[ZAXIS] = 1202;
+
+  // while (rxBytesReceived < RX_PACKET_LENGTH && SERIAL_AVAILABLE()) {
+  //   rxBuffer[rxBytesReceived] = SERIAL_READ();
+    
+  //    Serial.print("Byte no ");
+  //     Serial.print(rxBytesReceived);
+  //     Serial.print(" val=");
+  //     Serial.println(rxBuffer[rxBytesReceived]);
+
+  //     rxBytesReceived++;
+  // }
+  // Serial.print("Integer1=");
+  // Serial.println(Serial.parseInt());
+  // Serial.print("Integer2=");
+  // Serial.println(Serial.parseInt());
+  // Serial.print("Integer3=");
+  // Serial.println(Serial.parseInt());
   
   // Only accept the packet if it's long enough and is terminated with char(254)
-  if (SERIAL_AVAILABLE()) {
-    int lastChar = SERIAL_READ();
+  // if (SERIAL_AVAILABLE()) {
+  //   int lastChar = SERIAL_READ();
 
-    if (lastChar == 254 && rxBytesReceived >= RX_PACKET_LENGTH) {
+    // if (rxBytesReceived >= RX_PACKET_LENGTH) {
       for (int i=0; i < RX_PACKET_LENGTH; i++) {
         // We are packing ints up to 1000 into one byte, so we divide by four
-        setChannelValue(rxChannelMap[i], rxBuffer[i] * 4 + 1000);
+        int param = Serial.parseInt();
+        setChannelValue(rxChannelMap[i], param * 4 + 1000);
+        Serial.println( param * 4 + 1000);
       }
-    }
-  }
+    // }
+  // }
 }
 
 

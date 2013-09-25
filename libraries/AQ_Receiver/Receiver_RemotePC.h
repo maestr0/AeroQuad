@@ -64,43 +64,14 @@ void setChannelValue(byte channel,int value) {
 }
 
 void readReceiverPC() {
-  Serial.println("reading RC..."); 
+  Serial.println("receiving RC data..."); 
   rxBytesReceived = 0;
-//  receiverCommand[THROTTLE] = -666;
- // receiverCommand[YAXIS] = 200;
-  //receiverCommand[XAXIS] = 1201;
-  //receiverCommand[ZAXIS] = 1202;
-
-  // while (rxBytesReceived < RX_PACKET_LENGTH && SERIAL_AVAILABLE()) {
-  //   rxBuffer[rxBytesReceived] = SERIAL_READ();
-    
-  //    Serial.print("Byte no ");
-  //     Serial.print(rxBytesReceived);
-  //     Serial.print(" val=");
-  //     Serial.println(rxBuffer[rxBytesReceived]);
-
-  //     rxBytesReceived++;
-  // }
-  // Serial.print("Integer1=");
-  // Serial.println(Serial.parseInt());
-  // Serial.print("Integer2=");
-  // Serial.println(Serial.parseInt());
-  // Serial.print("Integer3=");
-  // Serial.println(Serial.parseInt());
-  
-  // Only accept the packet if it's long enough and is terminated with char(254)
-  // if (SERIAL_AVAILABLE()) {
-  //   int lastChar = SERIAL_READ();
-
-    // if (rxBytesReceived >= RX_PACKET_LENGTH) {
       for (int i=0; i < RX_PACKET_LENGTH; i++) {
         // We are packing ints up to 1000 into one byte, so we divide by four
         int param = Serial.parseInt();
         setChannelValue(rxChannelMap[i], param * 4 + 1000);
         Serial.println( param * 4 + 1000);
       }
-    // }
-  // }
 }
 
 
